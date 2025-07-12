@@ -91,4 +91,30 @@ export default class HashMap {
     }
     return count;
   }
+
+  clear() {
+    this.bucketArray.fill(null);
+  }
+
+  keys() {
+    const arr = [];
+    for (let bucket of this.bucketArray) {
+      while (bucket) {
+        arr.push(bucket.key);
+        bucket = bucket.next;
+      }
+    }
+    return arr;
+  }
+
+  values() {
+    const arr = [];
+    for (let bucket of this.bucketArray) {
+      while (bucket) {
+        arr.push(bucket.value);
+        bucket = bucket.next;
+      }
+    }
+    return arr;
+  }
 }
