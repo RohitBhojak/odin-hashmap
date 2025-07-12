@@ -20,3 +20,4 @@ console.log(map.has("ab"));
 console.log(map.length());
 console.log(map.keys());
 console.log(map.values());
+console.log(map.entries());

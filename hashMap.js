@@ -117,4 +117,15 @@ export default class HashMap {
     }
     return arr;
   }
+
+  entries() {
+    const arr = [];
+    for (let bucket of this.bucketArray) {
+      while (bucket) {
+        arr.push([bucket.key, bucket.value]);
+        bucket = bucket.next;
+      }
+    }
+    return arr;
+  }
 }
