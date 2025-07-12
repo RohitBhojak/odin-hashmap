@@ -31,25 +31,53 @@ export default class HashMap {
       // empty bucket
       this.bucketArray[HASH_CODE] = new Node(key, value);
     } else {
-      let ptr = this.bucketArray[HASH_CODE];
-      while (ptr !== null) {
-        if (ptr.key === key) {
-          ptr.value = value;
+      let current = this.bucketArray[HASH_CODE];
+      while (current) {
+        if (current.key === key) {
+          current.value = value;
           return;
         }
-        if (ptr.next === null) break;
+        if (current.next === null) break;
       }
 
-      ptr.next = new Node(key, value);
+      current.next = new Node(key, value);
     }
   }
 
   get(key) {
     const HASH_CODE = this.#hash(key);
-    let ptr = this.bucketArray[HASH_CODE];
-    while (ptr !== null && ptr.key !== key) {
-      ptr = ptr.next;
+    let current = this.bucketArray[HASH_CODE];
+    while (current && current.key !== key) {
+      current = current.next;
     }
-    return ptr;
+    return current;
+  }
+
+  has(key) {
+    return this.get(key) !== null;
+  }
+
+  remove(key) {
+    const HASH_CODE = this.#hash(key);
+    let current = this.bucketArray[HASH_CODE];
+
+    if (current && current.key === key) {
+      this.bucketArray[HASH_CODE] = current.next;
+      return true;
+    }
+
+    let prev = null;
+
+    while (current && current.key !== key) {
+      prev = current;
+      current = current.next;
+    }
+
+    if (current && current.key === key) {
+      prev.next = current.next;
+      return true;
+    }
+
+    return false;
   }
 }
