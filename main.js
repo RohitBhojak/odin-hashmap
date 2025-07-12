@@ -9,10 +9,12 @@ for (let i = 97; i < 123; i++) {
 
 map.set("a", "new value");
 
-console.log(map.remove("q"));
-console.log(map.remove("a"));
+// console.log(map.remove("q"));
+// console.log(map.remove("a"));
 console.log(map.get("a"));
 console.log(map.get("q"));
 console.log(map.has("a"));
 console.log(map.has("q"));
 console.log(map.has("ab"));
+
+console.log(map.length());

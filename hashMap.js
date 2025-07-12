@@ -80,4 +80,15 @@ export default class HashMap {
 
     return false;
   }
+
+  length() {
+    let count = 0;
+    for (let bucket of this.bucketArray) {
+      while (bucket) {
+        bucket = bucket.next;
+        count++;
+      }
+    }
+    return count;
+  }
 }
