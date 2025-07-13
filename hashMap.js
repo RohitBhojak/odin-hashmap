@@ -50,7 +50,7 @@ export default class HashMap {
     while (current && current.key !== key) {
       current = current.next;
     }
-    return current;
+    return current ? current.value : null;
   }
 
   has(key) {
