@@ -12,6 +12,7 @@ export default class HashMap {
     this.loadFactor = loadFactor;
     this.bucketArray = new Array(this.capacity);
     this.bucketArray.fill(null);
+    this.size = 0;
   }
 
   #hash(key) {
@@ -23,6 +24,17 @@ export default class HashMap {
     }
 
     return hashCode;
+  }
+
+  #grow() {
+    this.capacity *= 2;
+    const entries = this.entries();
+    this.bucketArray = new Array(this.capacity);
+    this.bucketArray.fill(null);
+    this.size = 0;
+    for (let entry of entries) {
+      this.set(...entry);
+    }
   }
 
   set(key, value) {
@@ -38,9 +50,14 @@ export default class HashMap {
           return;
         }
         if (current.next === null) break;
+        current = current.next;
       }
 
       current.next = new Node(key, value);
+    }
+    this.size++;
+    if (this.size / this.capacity > this.loadFactor) {
+      this.#grow();
     }
   }
 
@@ -63,6 +80,7 @@ export default class HashMap {
 
     if (current && current.key === key) {
       this.bucketArray[HASH_CODE] = current.next;
+      this.size--;
       return true;
     }
 
@@ -75,6 +93,7 @@ export default class HashMap {
 
     if (current && current.key === key) {
       prev.next = current.next;
+      this.size--;
       return true;
     }
 
@@ -82,18 +101,12 @@ export default class HashMap {
   }
 
   length() {
-    let count = 0;
-    for (let bucket of this.bucketArray) {
-      while (bucket) {
-        bucket = bucket.next;
-        count++;
-      }
-    }
-    return count;
+    return this.size;
   }
 
   clear() {
     this.bucketArray.fill(null);
+    this.size = 0;
   }
 
   keys() {
