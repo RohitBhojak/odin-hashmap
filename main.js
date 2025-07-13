@@ -19,11 +19,11 @@ map.set("ice cream", "white");
 map.set("jacket", "blue");
 map.set("kite", "pink");
 map.set("lion", "golden");
+map.set("moon", "silver");
 
-// map.set("a", "new value");
+map.set("a", "new value");
 
-// console.log(map.remove("q"));
-// console.log(map.remove("a"));
+console.log(map.remove("q"));
 console.log(map.get("a"));
 console.log(map.get("q"));
 console.log(map.has("a"));
